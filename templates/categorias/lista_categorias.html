@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titulo %}
+    Home
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'assets/css/categorias.css' %}">
+{% endblock %}
+
+{% block contenido %}
+
+<div class="content-section">
+    <h2>Lista de Categorias</h2>
+
+    {% if user.is_authenticated %}
+        {% if perms.productos.add_categoria %}
+            <a href="{% url 'crear_categoria' %}" class="btn btn-primary">Crear Categoria</a>
+        {% endif %}
+    {% endif %}
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                {% if user.is_authenticated %}
+                    {% if perms.productos.change_categoria %}
+                        <th>Editar</th>
+                    {% endif %}
+                    {% if perms.productos.delete_categoria %}
+                        <th>Eliminar</th>
+                    {% endif %}
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for categoria in categorias %}
+            <tr>
+                <td>{{ categoria.nombre }}</td>
+                <td>{{ categoria.descripcion }}</td>
+                {% if user.is_authenticated %}
+                    {% if perms.productos.change_categoria %}
+                        <td><a href="{% url 'actualizar_categoria' categoria.id %}" class="btn btn-primary">Editar</a></td>
+                    {% endif %}
+                    {% if perms.productos.delete_categoria %}
+                        <td><a href="{% url 'eliminar_categoria' categoria.id %}" class="btn btn-primary">Eliminar</a></td>
+                    {% endif %}
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
+
+{% block js %}
+
+<script>
+    console.log("Página de productos cargada");
+</script>
+
+{% endblock %}

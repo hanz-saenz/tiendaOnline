@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+    Crear Grupo
+{% endblock %}
+
+{% block css %}
+
+{% endblock %}
+
+
+{% block contenido %}
+<h1>Crear Grupo</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    <label for="nombre_grupo">Nombre del Grupo:</label>
+    <input type="text" id="nombre_grupo" name="nombre_grupo" required>
+    <h3>Permisos:</h3>
+    {% for permiso in permisos %}
+    <div>
+        <label>
+            <input type="checkbox" name="permisos" value="{{ permiso.id }}">
+            {{ permiso.name }}
+        </label>
+    </div>
+    {% endfor %}
+    <button type="submit">Crear Grupo</button>
+
+</form>
+    
+{% endblock %}  
+
+
+{% block js %}
+
+
+{% endblock %}

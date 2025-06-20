@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titulo %}
+    Lista Usuarios
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'assets/css/usuarios.css' %}">
+{% endblock %}
+
+{% block contenido %}
+
+<div class="content-section">
+    <h2>Lista de Usuarios</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                
+                <th>Grupos</th>
+                <th>Permisos</th>
+                <th>Super Usuario</th>
+                {% if user.is_authenticated %}
+                        <th>Grupo</th>
+                        <th>Permisos</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for users in users %}
+            <tr>
+                <td>{{ users.username }}</td>
+                <td>{{ users.email }}</td>
+                <td>{% for grupo in users.groups.all %}{{ grupo }}<br>{% endfor    %}</td>
+                <td>{% for permiso in users.user_permissions.all %}{{ permiso }}<br>{% endfor    %}</td>
+                <td>{{ users.is_superuser }}</td>
+                {% if user.is_authenticated %}
+                        <td><a href="{% url 'asignar_grupos' users.id %}" class="btn btn-primary">Asignar</a></td>
+             
+            
+                        <td><a href="{% url 'asignar_permisos' users.id %}" class="btn btn-primary">Asignar</a></td>
+                
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
+
+{% block js %}
+
+<script>
+    console.log("Página de productos cargada");
+</script>
+
+{% endblock %}

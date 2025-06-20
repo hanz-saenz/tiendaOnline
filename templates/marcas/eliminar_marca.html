@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+    Nueva Categoría
+{% endblock %}
+
+{% block css %}
+
+
+{% endblock %}
+
+
+{% block contenido %}
+
+
+<section class="">
+<div class="container">
+    <h2>Eliminar Categoría</h2>
+    <p>¿Estás seguro de que deseas eliminar "{{ marca.nombre }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Confirmar Eliminación</button>
+        <a href="{% url 'marcas' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+</section>
+
+    
+{% endblock %}  
+
+
+{% block js %}
+
+
+{% endblock %}

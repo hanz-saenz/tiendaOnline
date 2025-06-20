@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+    Nueva Marca
+{% endblock %}
+
+{% block css %}
+<style>
+    .formulario {
+        background-color: brown;
+    }
+</style>
+
+{% endblock %}
+
+
+{% block contenido %}
+
+
+<section class="">
+            <h2>Crear Marca</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Guardar</button>
+            </form>
+</section>
+
+    
+{% endblock %}  
+
+
+{% block js %}
+
+
+{% endblock %}

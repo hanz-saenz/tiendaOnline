@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+    Asignar grupos
+{% endblock %}
+
+{% block css %}
+
+{% endblock %}
+
+
+{% block contenido %}
+<h1>Asignar Grupos a Usuario {{ user.username }}</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {% for grupo in grupos %}
+    <div>
+        <label>
+            <input type="checkbox" name="groups" value="{{ grupo.id }}" {% if grupo in user.groups.all %} checked {% endif %}>
+            {{ grupo.name }}
+        </label>
+    </div>
+    {% endfor %}
+    <button type="submit">Guardar</button>
+
+</form>
+
+{% if messages %}
+    {% for message in messages %}
+        <div>
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+    
+{% endblock %}  
+
+
+{% block js %}
+
+
+{% endblock %}

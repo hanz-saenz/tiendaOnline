@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titulo %}
+    Marcas
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'assets/css/marcas.css' %}">
+{% endblock %}
+
+{% block contenido %}
+
+<div class="content-section">
+            <h2>Lista de Marcas</h2>
+            {% if user.is_authenticated %}
+            <a href="{% url 'nueva_marca' %}" class="btn btn-primary">Nueva Marca</a>
+            {% endif %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        {% if user.is_authenticated %}
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for marca in marcas %}
+                    <tr>
+                        <td>{{ marca.nombre }}</td>
+                        {% if user.is_authenticated %}
+                        <td><a href="{% url 'actualizar_marca' marca.id %}" class="btn btn-primary">Editar</a></td>
+                        <td><a href="{% url 'eliminar_marca' marca.id %}" class="btn btn-primary">Eliminar</a></td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+{% endblock %}
+
+{% block js %}
+
+<script>
+    console.log("Página de productos cargada");
+</script>
+
+{% endblock %}

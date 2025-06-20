@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titulo %}
+    Proveedores
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'assets/css/proveedores.css' %}">
+{% endblock %}
+
+{% block contenido %}
+
+<div class="content-section">
+            <h2>Lista de Proveedores</h2>
+            {% if user.is_authenticated %}
+            <a href="{% url 'nuevo_proveedor' %}" class="btn btn-primary">Nueva Proveedor</a>
+            {% endif %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        {% if user.is_authenticated %}
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for proveedor in proveedores %}
+                    <tr>
+                        <td>{{ proveedor.nombre }}</td>
+                        {% if user.is_authenticated %}
+                        <td><a href="{% url 'actualizar_proveedor' proveedor.id %}" class="btn btn-primary">Editar</a></td>
+                        <td><a href="{% url 'eliminar_proveedor' proveedor.id %}" class="btn btn-primary">Eliminar</a></td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+{% endblock %}
+
+{% block js %}
+
+<script>
+    console.log("Página de productos cargada");
+</script>
+
+{% endblock %}
