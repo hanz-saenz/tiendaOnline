@@ -11,25 +11,25 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.CreateModel(
-            name='Proveedor',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('nombre', models.CharField(max_length=100, verbose_name='Proveedor')),
-                ('fecha_creacion', models.DateTimeField(auto_now_add=True, verbose_name='Fecha de creación')),
-                ('fecha_actualizacion', models.DateTimeField(auto_now=True, verbose_name='Fecha de actualización')),
-            ],
-        ),
-        migrations.RemoveField(
-            model_name='producto',
-            name='autor',
-        ),
-        migrations.AddField(
-            model_name='producto',
-            name='proveedor',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='productos.proveedor', verbose_name='Proveedor'),
-        ),
-        migrations.DeleteModel(
-            name='Autor',
-        ),
+        # migrations.CreateModel(
+        #     name='Proveedor',
+        #     fields=[
+        #         ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+        #         ('nombre', models.CharField(max_length=100, verbose_name='Proveedor')),
+        #         ('fecha_creacion', models.DateTimeField(auto_now_add=True, verbose_name='Fecha de creación')),
+        #         ('fecha_actualizacion', models.DateTimeField(auto_now=True, verbose_name='Fecha de actualización')),
+        #     ],
+        # ),
+        # migrations.RemoveField(
+        #     model_name='producto',
+        #     name='autor',
+        # ),
+        # migrations.AddField(
+        #     model_name='producto',
+        #     name='proveedor',
+        #     field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='productos.proveedor', verbose_name='Proveedor'),
+        # ),
+        # migrations.DeleteModel(
+        #     name='Autor',
+        # ),
     ]

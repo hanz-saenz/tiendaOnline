@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+    Editar Perfil
+{% endblock %}
+
+{% block css %}
+
+{% endblock %}
+
+
+{% block contenido %}
+<h1>Editar Perfil</h1>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    <img src="{{ imagen.url }}" alt="Foto de perfil" style="width: 400px; height: 400px;">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Guardar Cambios</button>
+    </form>
+
+{% if messages %}
+    {% for message in messages %}
+        <div>
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+    
+{% endblock %}  
+
+
+{% block js %}
+
+
+{% endblock %}

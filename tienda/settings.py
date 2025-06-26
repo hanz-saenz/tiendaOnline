@@ -81,26 +81,26 @@ WSGI_APPLICATION = 'tienda.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#         'TEST': {
-#             'NAME': BASE_DIR / 'db_test.sqlite3'
-#         }
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'tienda_te9n',
-        'USER': 'admin',
-        'PASSWORD': '94LnculBOnUQxUpoQcQlBuWYAnbxsaOX',
-        'HOST': 'dpg-d1dkfh6r433s73fghkhg-a.oregon-postgres.render.com',
-        'PORT': 5432,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+        'TEST': {
+            'NAME': BASE_DIR / 'db_test.sqlite3'
+        }
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'tienda_te9n',
+#         'USER': 'admin',
+#         'PASSWORD': '94LnculBOnUQxUpoQcQlBuWYAnbxsaOX',
+#         'HOST': 'dpg-d1dkfh6r433s73fghkhg-a.oregon-postgres.render.com',
+#         'PORT': 5432,
+#     }
+# }
 
 
 # Password validation
@@ -159,3 +159,13 @@ INTERNAL_IPS = [
     "127.0.0.1",
     # ...
 ]
+
+
+# SMTP
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'hanzbk@gmail.com'
+# EMAIL_HOST_PASSWORD = 'sssssssssssss'

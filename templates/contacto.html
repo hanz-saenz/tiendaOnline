@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+    Contactanos
+{% endblock %}
+
+{% block css %}
+
+{% endblock %}
+
+
+{% block contenido %}
+
+<div class="container">
+    <h1>Contacto</h1>
+</div>
+
+<section class="">
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p}}
+        <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+</section>
+
+    
+{% endblock %}  
+
+
+{% block js %}
+
+{% endblock %}

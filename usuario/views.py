@@ -185,3 +185,38 @@ class ListaUsuariosView(View):
         }
 
         return render(request, 'usuarios/lista_usuarios.html', context)
+    
+from .forms import EditarPerfil
+def editar_perfil(request):
+    user = request.user
+    print('user', user)
+    perfil, created = PerfilUsuario.objects.get_or_create(user=user)
+    
+    if request.method == 'POST':
+        form = EditarPerfil(request.POST, request.FILES, instance=perfil)
+        
+        if form.is_valid():
+            user.first_name = form.cleaned_data['nombre']
+            user.last_name = form.cleaned_data['apellido']
+            user.save()
+            form.save()
+            messages.success(request, 'Perfil editado correctamente.')
+            return redirect('editar_usuario')  # Cambia 'login' por la URL deseada
+        else:
+            messages.error(request, 'Error al editar el perfil. Por favor, corrige los errores.')
+    else:
+        initial_data = {
+            'nombre': user.first_name,
+            'apellido': user.last_name,
+            'telefono': perfil.telefono,
+            'direccion': perfil.direccion,
+            'fecha_nacimiento': perfil.fecha_nacimiento,
+            'foto_perfil': perfil.foto_perfil,
+        }
+        form = EditarPerfil(instance=perfil, initial=initial_data)
+
+    context = {
+        'form': form,
+        'imagen': perfil.foto_perfil
+    }
+    return render(request, 'usuarios/editar_perfil.html', context)
