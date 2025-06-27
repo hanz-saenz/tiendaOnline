@@ -23,4 +23,14 @@ urlpatterns = [
     path('crear-producto/', CrearProductoView.as_view(), name='crear_producto'),
     path('actualizar-producto/<int:pk>', ActualizarProductoView.as_view(), name='actualizar_producto'),
     path('eliminar-producto/<int:pk>', EliminarProductoView.as_view(), name='eliminar_producto'),
+    path('ajax_categoria/', ajax_categoria, name='ajax_categoria'),
+
+    #url drf
+    path('api/categorias/', CategoriasApiView.as_view(), name='categorias-api'),
+    path('api/productos/', ProductosApiView.as_view(), name='productos-api'),
+    path('api/productos/<int:pk>/', ProductosApiView.as_view(), name='productos-api'),
+    path('api/categorias/<int:pk>/', CategoriasApiView.as_view(), name='categorias-api'),
+
+    path('api/categoria/editar_categoria/<int:pk>/', ActualizarCategoriaApiView.as_view(), name='actualizar_categoria_api'),
+
 ]

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titulo %}
+    Lista productos AJAZ
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'assets/css/productos.css' %}">
+{% endblock %}
+
+{% block contenido %}
+<h1>Categoria - AJAX</h1>
+
+<h2>Nuevo Categoria</h2>
+<input type="text" id="nueva_categoria" placeholder="Nuevo Categoria">
+<button onclick="crearCategoria()">Crear Categoria</button>
+
+<h2>Lista de Categorias</h2>
+<ul id="categorias-lista">
+    {% for categoria in categorias %}
+        <li>{{ categoria.nombre }}</li>
+    {% endfor %}
+</ul>
+
+
+
+
+{% endblock %}
+
+{% block js %}
+
+<script>
+   function crearCategoria() {
+       const categoria = document.getElementById('nueva_categoria').value;
+
+       fetch('http://localhost:8000/productos/api/categorias/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            "X-CSRFToken": "{{ csrf_token }}"
+        },
+        body: JSON.stringify({ nombre: categoria })
+       })
+       .then(response => response.json())
+       .then(data => {
+           const lista = document.getElementById('categorias-lista');
+           const li = document.createElement('li');
+           li.textContent = data.nombre;
+           lista.appendChild(li);
+       })
+   }    
+</script>
+
+{% endblock %}

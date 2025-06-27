@@ -22,12 +22,20 @@ class MarcaForm(forms.ModelForm):
     class Meta:
         model = Marca
         fields = ['nombre', 'descripcion']
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class': 'form-control formulario'}),
+            'descripcion': forms.Textarea(attrs={'class': 'form-control'}),
+        }
 
 class ProveedorForm(forms.ModelForm):
 
     class Meta:
         model = Proveedor
         fields = ['nombre', 'descripcion']
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class': 'form-control formulario'}),
+            'descripcion': forms.Textarea(attrs={'class': 'form-control'}),
+        }
 
 class ProductoForm(forms.ModelForm):
     imagen = forms.ImageField(required=True, label="Imagen del Producto")
@@ -35,3 +43,13 @@ class ProductoForm(forms.ModelForm):
     class Meta:
         model = Producto
         fields = '__all__'
+
+        widgets = {
+            'categorias': forms.CheckboxSelectMultiple(),
+            'proveedor': forms.Select(attrs={'class': 'form-control'}),
+            'marca': forms.Select(attrs={'class': 'form-control'}),
+            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'precio': forms.NumberInput(attrs={'class': 'form-control'}),
+            'stock': forms.NumberInput(attrs={'class': 'form-control'}),
+            'descripcion': forms.Textarea(attrs={'class': 'form-control'}),
+        }

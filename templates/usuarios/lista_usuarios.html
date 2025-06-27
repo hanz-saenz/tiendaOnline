@@ -12,7 +12,9 @@
 
 <div class="content-section">
     <h2>Lista de Usuarios</h2>
-
+            {% if user.is_authenticated %}
+            <a href="{% url 'crear_grupo' %}" class="btn btn-primary">Nueva Grupo</a>
+            {% endif %}
     <table>
         <thead>
             <tr>
@@ -37,10 +39,10 @@
                 <td>{% for permiso in users.user_permissions.all %}{{ permiso }}<br>{% endfor    %}</td>
                 <td>{{ users.is_superuser }}</td>
                 {% if user.is_authenticated %}
-                        <td><a href="{% url 'asignar_grupos' users.id %}" class="btn btn-primary">Asignar</a></td>
+                        <td><a href="{% url 'asignar_grupos' users.id %}" class="btn btn-warning">Asignar</a></td>
              
             
-                        <td><a href="{% url 'asignar_permisos' users.id %}" class="btn btn-primary">Asignar</a></td>
+                        <td><a href="{% url 'asignar_permisos' users.id %}" class="btn btn-danger">Asignar</a></td>
                 
                 {% endif %}
             </tr>

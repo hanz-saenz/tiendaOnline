@@ -36,6 +36,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt',
     "debug_toolbar",
     'productos',
     'landing',
@@ -50,7 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'productos.middleware.AutorizaciónMiddleware',
+    # 'productos.middleware.AutorizaciónMiddleware',
     'productos.middleware.LogsMiddleware',
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -169,3 +172,18 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 # EMAIL_HOST_USER = 'hanzbk@gmail.com'
 # EMAIL_HOST_PASSWORD = 'sssssssssssss'
+
+
+#manejo de permisos
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny', #todo el mundo puede ingresar
+        # 'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ]
+}

@@ -5,11 +5,6 @@
 {% endblock %}
 
 {% block css %}
-<style>
-    .formulario {
-        background-color: brown;
-    }
-</style>
 
 {% endblock %}
 
@@ -22,7 +17,7 @@
             <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button type="submit">Guardar</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
             </form>
 </section>
 

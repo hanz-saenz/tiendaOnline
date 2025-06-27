@@ -16,6 +16,7 @@
     {% if user.is_authenticated %}
         {% if perms.productos.add_categoria %}
             <a href="{% url 'crear_categoria' %}" class="btn btn-primary">Crear Categoria</a>
+            <a href="{% url 'ajax_categoria' %}" class="btn btn-primary">Crear AJAX Categoria</a>
         {% endif %}
     {% endif %}
     <table>
@@ -40,10 +41,10 @@
                 <td>{{ categoria.descripcion }}</td>
                 {% if user.is_authenticated %}
                     {% if perms.productos.change_categoria %}
-                        <td><a href="{% url 'actualizar_categoria' categoria.id %}" class="btn btn-primary">Editar</a></td>
+                        <td><a href="{% url 'actualizar_categoria' categoria.id %}" class="btn btn btn-warning">Editar</a></td>
                     {% endif %}
                     {% if perms.productos.delete_categoria %}
-                        <td><a href="{% url 'eliminar_categoria' categoria.id %}" class="btn btn-primary">Eliminar</a></td>
+                        <td><a href="{% url 'eliminar_categoria' categoria.id %}" class="btn btn-danger">Eliminar</a></td>
                     {% endif %}
                 {% endif %}
             </tr>

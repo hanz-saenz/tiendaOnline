@@ -3,7 +3,7 @@ from django.contrib.auth  import authenticate, login as auth_login, logout as au
 from django.contrib import messages
 from .models import PerfilUsuario
 # Create your views here.
-
+from .forms import EditarPerfil
 
 def login_view(request):
     if request.user.is_authenticated:
@@ -186,8 +186,28 @@ class ListaUsuariosView(View):
 
         return render(request, 'usuarios/lista_usuarios.html', context)
     
-from .forms import EditarPerfil
+
+
+@login_required
 def editar_perfil(request):
+    """
+    Permite a un usuario autenticado editar su perfil.
+
+    - Obtiene o crea el perfil asociado al usuario actual.
+    - Si la petición es POST, procesa el formulario de edición:
+        - Actualiza el nombre y apellido del usuario.
+        - Guarda los cambios en el perfil y el usuario.
+        - Muestra un mensaje de éxito y redirige a la vista de edición de usuario.
+        - Si el formulario no es válido, muestra un mensaje de error.
+    - Si la petición es GET, inicializa el formulario con los datos actuales del usuario y su perfil.
+    - Renderiza la plantilla 'usuarios/editar_perfil.html' con el formulario y la imagen de perfil.
+
+    Args:
+        request (HttpRequest): La petición HTTP recibida.
+
+    Returns:
+        HttpResponse: Renderiza la plantilla de edición de perfil con el contexto correspondiente.
+    """
     user = request.user
     print('user', user)
     perfil, created = PerfilUsuario.objects.get_or_create(user=user)
@@ -220,3 +240,64 @@ def editar_perfil(request):
         'imagen': perfil.foto_perfil
     }
     return render(request, 'usuarios/editar_perfil.html', context)
+
+
+###############################################################
+################## DRF#########################################
+
+
+from rest_framework.authtoken.models import Token
+from django.http import JsonResponse
+from django.contrib.auth.models import User
+from rest_framework.views import APIView
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework import status
+from rest_framework.response import Response
+
+def generar_token(request):
+    user = request.user
+    print('user', user)
+    token, created = Token.objects.get_or_create(user=user)
+    print('TOKEN', token.key)
+
+    return JsonResponse({'token': token.key})
+    
+
+class LoginApiView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+
+        try:
+
+            usuario = request.data.get('username')
+            password = request.data.get('password')
+
+            user = authenticate(request=request, username=usuario, password=password)
+            if user:
+                auth_login(request, user)
+                token, created = Token.objects.get_or_create(user=user)
+                #token de jwt
+                generar_tokens = RefreshToken.for_user(user)
+
+                return Response(
+                    {
+                        'status': 'success',
+                        'data': {
+                            'access_token': str(generar_tokens.access_token),
+                            'refresh_token': str(generar_tokens),
+                        },
+                        'mensaje': 'Has iniciado sesión correctamente',
+                    }, status=status.HTTP_200_OK
+                )
+
+        except Exception as e:
+            return Response(
+                    {
+                        'status': 'error',
+                        'data': None,
+                        'mensaje': f'Error al iniciar sesión. Codigo de error: {e}',
+                    }, status=status.HTTP_400_BAD_REQUEST
+                )

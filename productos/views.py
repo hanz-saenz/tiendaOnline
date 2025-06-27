@@ -233,3 +233,92 @@ class EliminarProductoView(DeleteView):
     model = Producto
     success_url = reverse_lazy('productos')
     template_name = 'productos/eliminar_producto.html'
+
+
+
+##################################################################################
+######################## DRF #####################################################
+##################################################################################
+
+
+
+
+from rest_framework.views import APIView
+from .serializers import CategoriaSerializer, ProductoSerializer
+from rest_framework.response import Response
+from rest_framework import status
+
+class CategoriasApiView(APIView):
+    def get(self, request, format=None):
+        categorias = Categoria.objects.all()
+        print(type(categorias))
+        serializer = CategoriaSerializer(categorias, many=True)
+        print(type(serializer.data))
+        return Response(serializer.data)
+    
+    def post(self, request, format=None):
+        serialializer = CategoriaSerializer(data=request.data)
+        if serialializer.is_valid():
+            serialializer.save()
+            return Response(serialializer.data, status=status.HTTP_201_CREATED)
+        return Response(serialializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def put(self, request, pk, format=None):
+        try:
+            categoria = Categoria.objects.get(pk=pk)
+        except Categoria.DoesNotExist:
+            return Response({"error": "Categoría no encontrada"}, status=status.HTTP_404_NOT_FOUND)
+        
+        serializer = CategoriaSerializer(categoria, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, pk, format=None):
+        categoria = Categoria.objects.get(pk=pk)
+        categoria.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+        
+
+from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
+
+class ActualizarCategoriaApiView(RetrieveUpdateDestroyAPIView):
+    queryset = Categoria.objects.all()
+    serializer_class = CategoriaSerializer
+
+
+class ProductosApiView(APIView):
+    def get(self, request, format=None):
+        productos = Producto.objects.all()
+        serializer = ProductoSerializer(productos, many=True)
+        return Response(serializer.data)
+    
+    def post(self, request, format=None):
+        serializer = ProductoSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def put(self, request, pk, format=None):
+        try:
+            producto = Producto.objects.get(pk=pk)
+        except Producto.DoesNotExist:
+            return Response({"error": "Producto no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+        
+        serializer = ProductoSerializer(producto, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, pk, format=None):
+        producto = Producto.objects.get(pk=pk)
+        producto.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+def ajax_categoria(request):
+    categorias = Categoria.objects.all()
+    return render(request, 'productos/productos_ajax.html', {'categorias': categorias})

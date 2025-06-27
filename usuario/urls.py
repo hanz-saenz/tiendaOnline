@@ -10,4 +10,8 @@ urlpatterns = [
     path('asignar-grupos-usuario/<int:user_id>', AsignarGruposUsuario.as_view(), name='asignar_grupos'),
     path('lista-usuarios/', ListaUsuariosView.as_view(), name='lista_usuarios'),
     path('editar-usuario/', editar_perfil, name='editar_usuario'),
+
+    #drf
+    path('generar-toke/', generar_token, name='generar_token'),
+    path('login/', LoginApiView.as_view(), name='login-drf'),
 ]
