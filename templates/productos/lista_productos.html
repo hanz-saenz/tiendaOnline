@@ -32,7 +32,13 @@
                     <tr>
                         <td>{{ producto.nombre }}</td>
                         <td>{{ producto.precio }}</td>
-                        <td><img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" width="100" height="100"></td>
+                        <td>
+                            {% if producto.imagen %}
+                            <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" width="100" height="100">
+                            {% else %}
+                            <img src="https://hapuricellisa.com.ar/plugins/productos/producto-sin-imagen.png" alt="sin producto" width="100" height="100">
+                            {% endif %}
+                        </td>
                         {% if user.is_authenticated %}
                             <td><a href="{% url 'actualizar_producto' producto.id %}" class="btn btn-warning">Editar</a></td>
                             <td><a href="{% url 'eliminar_producto' producto.id %}" class="btn btn-danger">Eliminar</a></td>
@@ -40,8 +46,26 @@
                     </tr>
                     {% endfor %}
                 </tbody>
+                
             </table>
         </div>
+        <div class="pagination">
+    <span class="step-links">
+        {% if productos.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ productos.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ productos.number }} of {{ productos.paginator.num_pages }}.
+        </span>
+
+        {% if productos.has_next %}
+            <a href="?page={{ productos.next_page_number }}">next</a>
+            <a href="?page={{ productos.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
 
 {% endblock %}
 

@@ -1,0 +1,244 @@
+Watching for file changes with StatReloader
+D:\Clases\Python\Enyoi\Ejercicios\Python\tienda\tienda\settings.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /productos/lista-categorias/ HTTP/1.1" 200 19875
+"GET /static/assets/css/categorias.css HTTP/1.1" 200 782
+"GET /productos/lista-marcas/ HTTP/1.1" 200 19466
+"GET /static/assets/css/marcas.css HTTP/1.1" 200 776
+"GET /productos/lista-proveedores/ HTTP/1.1" 200 18071
+"GET /static/assets/css/proveedores.css HTTP/1.1" 200 776
+"GET /contacto/ HTTP/1.1" 200 16421
+"GET /usuario/lista-usuarios/ HTTP/1.1" 200 19933
+Internal Server Error: /usuario/editar-usuario/
+Traceback (most recent call last):
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\template\base.py", line 890, in _resolve_lookup
+    raise TypeError
+TypeError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\tienda\usuario\views.py", line 242, in editar_perfil
+    return render(request, 'usuarios/editar_perfil.html', context)
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\test\utils.py", line 114, in instrumented_test_render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\test\utils.py", line 114, in instrumented_test_render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\template\base.py", line 1075, in render
+    output = self.filter_expression.resolve(context)
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\template\base.py", line 722, in resolve
+    obj = self.var.resolve(context)
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\template\base.py", line 854, in resolve
+    value = self._resolve_lookup(context)
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\template\base.py", line 901, in _resolve_lookup
+    current = getattr(current, bit)
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\db\models\fields\files.py", line 69, in url
+    self._require_file()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\db\models\fields\files.py", line 44, in _require_file
+    raise ValueError(
+        "The '%s' attribute has no file associated with it." % self.field.name
+    )
+ValueError: The 'foto_perfil' attribute has no file associated with it.
+"GET /usuario/editar-usuario/ HTTP/1.1" 500 191762
+Not Found: /favicon.ico
+- Broken pipe from ('127.0.0.1', 65382)
+"GET /usuario/lista-usuarios/ HTTP/1.1" 200 19931
+Internal Server Error: /usuario/editar-usuario/
+Traceback (most recent call last):
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\template\base.py", line 890, in _resolve_lookup
+    raise TypeError
+TypeError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\tienda\usuario\views.py", line 242, in editar_perfil
+    return render(request, 'usuarios/editar_perfil.html', context)
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\test\utils.py", line 114, in instrumented_test_render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\test\utils.py", line 114, in instrumented_test_render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\template\base.py", line 1075, in render
+    output = self.filter_expression.resolve(context)
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\template\base.py", line 722, in resolve
+    obj = self.var.resolve(context)
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\template\base.py", line 854, in resolve
+    value = self._resolve_lookup(context)
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\template\base.py", line 901, in _resolve_lookup
+    current = getattr(current, bit)
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\db\models\fields\files.py", line 69, in url
+    self._require_file()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\Clases\Python\Enyoi\Ejercicios\Python\venv_tienda\Lib\site-packages\django\db\models\fields\files.py", line 44, in _require_file
+    raise ValueError(
+        "The '%s' attribute has no file associated with it." % self.field.name
+    )
+ValueError: The 'foto_perfil' attribute has no file associated with it.
+"GET /usuario/editar-usuario/ HTTP/1.1" 500 191762
+"GET /usuario/editar-usuario/ HTTP/1.1" 200 16738
+- Broken pipe from ('127.0.0.1', 65253)
+"GET /usuario/editar-usuario/ HTTP/1.1" 200 16738
+- Broken pipe from ('127.0.0.1', 51910)
+"GET /contacto/ HTTP/1.1" 200 16420
+"GET /productos/lista-proveedores/ HTTP/1.1" 200 18071
+"GET /productos/lista-marcas/ HTTP/1.1" 200 19466
+"GET /productos/lista/ HTTP/1.1" 200 18499
+"GET /media/imagenes/56a38571dde36168af1b9ba61d441b89.webp HTTP/1.1" 200 42558
+"GET /media/imagenes/photo-1607870411590-d5e9e06da09a.jpg HTTP/1.1" 200 521744
+"GET /media/imagenes/photo-1560185128-e173042f79dd.jpg HTTP/1.1" 200 784473
+"GET /productos/crear-producto/ HTTP/1.1" 200 18890
+"POST /productos/crear-producto/ HTTP/1.1" 302 0
+"GET /productos/lista-productos/ HTTP/1.1" 200 21830
+"GET /media/imagenes/L5590-690x460-1.webp HTTP/1.1" 200 11962
+"GET /media/imagenes/images_O7jCtbm.jpg HTTP/1.1" 200 7756
+"GET /media/imagenes/Mesa_de_trabajo_50_1_ncKmXpz.webp HTTP/1.1" 200 1464940
+"GET /media/imagenes/Mesa_de_trabajo_50_1_BI2qgia.webp HTTP/1.1" 200 1464940
+"GET /__debug__/render_panel/?store_id=143a168eb5ee44a0bce91ae0b549ab10&panel_id=CachePanel HTTP/1.1" 200 1441
+"GET /productos/lista/ HTTP/1.1" 200 18497
+"GET /productos/lista-categorias/ HTTP/1.1" 200 19874
+"GET /productos/lista-categorias/ HTTP/1.1" 200 19874
+"GET /static/assets/css/base.css HTTP/1.1" 200 3829
+"GET /static/assets/js/base.js HTTP/1.1" 200 602
+"GET /static/assets/css/categorias.css HTTP/1.1" 200 782
+"GET /static/bootstrap/css/bootstrap.min.css HTTP/1.1" 200 232018
+"GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 200 29444
+"GET /static/bootstrap/js/bootstrap.bundle.min.js HTTP/1.1" 200 80821
+"GET /static/debug_toolbar/css/print.css HTTP/1.1" 200 43
+"GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 200 14803
+"GET /static/debug_toolbar/js/utils.js HTTP/1.1" 200 4692
+"GET /__debug__/render_panel/?store_id=c38a24b2b58c467388bf89faff0d7540&panel_id=SQLPanel HTTP/1.1" 200 41357
+"GET /__debug__/render_panel/?store_id=c38a24b2b58c467388bf89faff0d7540&panel_id=StaticFilesPanel HTTP/1.1" 200 57392
+"GET /productos/lista/ HTTP/1.1" 200 18499
+"GET /static/bootstrap/js/bootstrap.bundle.min.js HTTP/1.1" 200 80821
+"GET /static/assets/js/base.js HTTP/1.1" 200 602
+"GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 200 14803
+"GET /static/debug_toolbar/js/utils.js HTTP/1.1" 200 4692
+"GET /productos/lista/ HTTP/1.1" 200 18496
+"GET /productos/lista/ HTTP/1.1" 200 18496
+"GET /static/assets/css/base.css HTTP/1.1" 200 3829
+"GET /static/assets/js/base.js HTTP/1.1" 200 602
+"GET /static/bootstrap/css/bootstrap.min.css HTTP/1.1" 200 232018
+"GET /static/bootstrap/js/bootstrap.bundle.min.js HTTP/1.1" 200 80821
+"GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 200 29444
+"GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 200 14803
+"GET /static/debug_toolbar/js/utils.js HTTP/1.1" 200 4692
+"GET /static/assets/css/productos.css HTTP/1.1" 200 776
+"GET /static/debug_toolbar/css/print.css HTTP/1.1" 200 43
+"GET /media/imagenes/56a38571dde36168af1b9ba61d441b89.webp HTTP/1.1" 200 42558
+"GET /media/imagenes/photo-1560185128-e173042f79dd.jpg HTTP/1.1" 200 784473
+"GET /media/imagenes/photo-1607870411590-d5e9e06da09a.jpg HTTP/1.1" 200 521744
+"GET /productos/lista-categorias/ HTTP/1.1" 200 19874
+"GET /productos/lista/ HTTP/1.1" 200 18496
+D:\Clases\Python\Enyoi\Ejercicios\Python\tienda\productos\views.py changed, reloading.
+Watching for file changes with StatReloader
+D:\Clases\Python\Enyoi\Ejercicios\Python\tienda\productos\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /productos/lista/ HTTP/1.1" 200 18500
+- Broken pipe from ('127.0.0.1', 63367)
+- Broken pipe from ('127.0.0.1', 63447)
+D:\Clases\Python\Enyoi\Ejercicios\Python\tienda\productos\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /productos/lista/ HTTP/1.1" 200 18500
+"GET /productos/lista/ HTTP/1.1" 200 18499
+"GET /static/assets/js/base.js HTTP/1.1" 200 602
+D:\Clases\Python\Enyoi\Ejercicios\Python\tienda\tienda\settings.py changed, reloading.
+Watching for file changes with StatReloader
+D:\Clases\Python\Enyoi\Ejercicios\Python\tienda\tienda\settings.py changed, reloading.
+Watching for file changes with StatReloader
+D:\Clases\Python\Enyoi\Ejercicios\Python\tienda\tienda\settings.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /productos/lista/ HTTP/1.1" 302 0
+"GET /es/productos/lista/ HTTP/1.1" 200 18554
+"GET /en/productos/lista/ HTTP/1.1" 200 18171
+"GET /en/productos/lista/ HTTP/1.1" 200 18171
+"GET /en/productos/lista-categorias/ HTTP/1.1" 200 19583
+"GET /en/productos/lista/ HTTP/1.1" 200 18172
+"GET /en/productos/lista-categorias/ HTTP/1.1" 200 19582
+"GET /en/productos/lista/ HTTP/1.1" 200 18171
+"GET /en/ HTTP/1.1" 200 15472

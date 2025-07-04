@@ -38,7 +38,7 @@ class ProveedorForm(forms.ModelForm):
         }
 
 class ProductoForm(forms.ModelForm):
-    imagen = forms.ImageField(required=True, label="Imagen del Producto")
+    imagen = forms.ImageField(required=False, label="Imagen del Producto")
 
     class Meta:
         model = Producto

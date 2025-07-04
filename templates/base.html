@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -8,7 +9,7 @@
     <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/7212/7212644.png">
     <title>
         {% block titulo %}
-            Mi Sitio Web Moderno
+            {% trans "Mi Sitio Web Moderno" %}
         {% endblock %}
     </title>
     <link rel="stylesheet" href="{% static 'assets/css/base.css' %}">
@@ -22,12 +23,12 @@
             <h1>Bienvenido a Nuestro Sitio</h1>
             <nav>
                 <ul>
-                    <li><a href="{% url 'index' %}" class="active">Home</a></li>
-                    <li><a href="{% url 'lista_productos' %}">Productos</a></li>
-                    <li><a href="{% url 'categorias' %}">Categorias</a></li>
-                    <li><a href="{% url 'marcas' %}">Marcas</a></li>
-                    <li><a href="{% url 'proveedores' %}">Proveedores</a></li>
-                    <li><a href="{% url 'contacto' %}">Contacto</a></li>
+                    <li><a href="{% url 'index' %}" class="active">{% trans "Inicio" %}</a></li>
+                    <li><a href="{% url 'lista_productos' %}">{% trans "Productos" %}</a></li>
+                    <li><a href="{% url 'categorias' %}">{% trans "Categorias" %}</a></li>
+                    <li><a href="{% url 'marcas' %}">{% trans "Marcas" %}</a></li>
+                    <li><a href="{% url 'proveedores' %}">{% trans "Proveedores" %}</a></li>
+                    <li><a href="{% url 'contacto' %}">{% trans "Contacto" %}</a></li>
                     {% if user.is_authenticated %}
                         
                         <li><a href="{% url 'lista_usuarios' %}">Lista de Usuarios</a></li>
@@ -51,7 +52,7 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 Mi Sitio Web. Todos los derechos reservados.</p>
+            <p>&copy; {% trans "2025 Mi Sitio Web. Todos los derechos reservados." %}</p>
         </div>
     </footer>
     <script src="{% static 'assets/js/base.js' %}"></script>

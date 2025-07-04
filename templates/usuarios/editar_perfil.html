@@ -17,7 +17,9 @@
             <p class="{% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</p>
         {% endfor %}
     {% endif %}
+    {% if imagen %}
     <img src="{{ imagen.url }}" alt="Foto de perfil" style="width: 400px; height: 400px;">
+    {% endif %}
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}

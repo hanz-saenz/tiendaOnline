@@ -33,4 +33,8 @@ urlpatterns = [
 
     path('api/categoria/editar_categoria/<int:pk>/', ActualizarCategoriaApiView.as_view(), name='actualizar_categoria_api'),
 
+
+    #generar tarea
+    path('generar-tarea/', generar_tare, name='generar_tarea'),
+    path('estado-tarea/<str:tarea_id>/', consultar_tarea, name='consultar_tarea'),
 ]

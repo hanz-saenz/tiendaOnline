@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+    Resultado tareas
+{% endblock %}
+
+{% block css %}
+
+{% endblock %}
+
+
+{% block contenido %}
+
+<div class="container">
+    <h1>Resultado tareas</h1>
+</div>
+
+<section class="">
+            <h2>Página Principal</h2>
+            <p>Tarea ene jecución {{ tarea_id }}</p>
+
+            <div class="resultado container">
+
+                <em>Esperando resultado ...</em>
+            </div>
+</section>
+
+    
+{% endblock %}  
+
+
+{% block js %}
+
+<script>
+    const tarea_id = "{{ tarea_id }}";
+    
+    async function verificarEstadoTarea() {
+
+        try {
+            const response = await fetch(`http://localhost:8000/productos/estado-tarea/${tarea_id}/`);
+            const data = await response.json();
+
+            console.log("estado tarea", data.estado);
+
+            if (data.estado === 'SUCCESS') {
+                document.querySelector('.resultado').innerHTML = `<strong>El resultado es: ${data.resultado}</strong> `;
+                clearInterval(intervalo);
+            } else if (data.estado === 'FAILURE') {
+                document.querySelector('.resultado').innerHTML = `<strong>Error al ejecutar la tarea</strong> `;
+                clearInterval(intervalo);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
+    const intervalo = setInterval(verificarEstadoTarea, 3000);
+</script>
+
+{% endblock %}

@@ -13,3 +13,5 @@ def actualizar_perfil(sender, instance, created, **kwargs):
     if not created:
         perfil, creado = PerfilUsuario.objects.get_or_create(user=instance)
         perfil.save()
+
+
