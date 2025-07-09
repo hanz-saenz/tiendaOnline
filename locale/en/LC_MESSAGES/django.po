@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-03 20:50-0500\n"
+"POT-Creation-Date: 2025-07-08 20:06-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,53 +17,90 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
 #: .\templates\base.html:12
 msgid "Mi Sitio Web Moderno"
 msgstr "My Modern Website"
 
-#: .\templates\base.html:26
+#: .\templates\base.html:39
 msgid "Inicio"
 msgstr "Home"
 
-#: .\templates\base.html:27
+#: .\templates\base.html:40
 msgid "Productos"
 msgstr "Products"
 
-#: .\templates\base.html:28
+#: .\templates\base.html:41 .\templates\categorias\lista_categorias.html:4
 msgid "Categorias"
 msgstr "Category"
 
-#: .\templates\base.html:29
+#: .\templates\base.html:42
 msgid "Marcas"
 msgstr "Brands"
 
-#: .\templates\base.html:30
+#: .\templates\base.html:43
 msgid "Proveedores"
 msgstr "Providers"
 
-#: .\templates\base.html:31
+#: .\templates\base.html:44
 msgid "Contacto"
 msgstr "Conctact"
 
-#: .\templates\base.html:55
+#: .\templates\base.html:68
 msgid "2025 Mi Sitio Web. Todos los derechos reservados."
 msgstr "2025 My web site. All Copyright reserved."
 
+#: .\templates\categorias\lista_categorias.html:14
+#, fuzzy
+#| msgid "Categorias"
+msgid "Lista de Categorias"
+msgstr "Category"
+
+#: .\templates\categorias\lista_categorias.html:18
+#, fuzzy
+#| msgid "Categorias"
+msgid "Crear Categoria"
+msgstr "Category"
+
+#: .\templates\categorias\lista_categorias.html:19
+#, fuzzy
+#| msgid "Categorias"
+msgid "Crear AJAX Categoria"
+msgstr "Category"
+
+#: .\templates\categorias\lista_categorias.html:25
+msgid "Nombre"
+msgstr "Name"
+
+#: .\templates\categorias\lista_categorias.html:26
+msgid "Descripción"
+msgstr "Description"
+
+#: .\templates\categorias\lista_categorias.html:29
+#: .\templates\categorias\lista_categorias.html:44
+msgid "Editar"
+msgstr "Edit"
+
+#: .\templates\categorias\lista_categorias.html:32
+#: .\templates\categorias\lista_categorias.html:47
+msgid "Eliminar"
+msgstr "Delete"
+
 #: .\usuario\validators.py:12
 msgid "La contraseña debe contener al menos una mayúscula."
-msgstr ""
+msgstr "The password must contain at least one capital letter."
 
 #: .\usuario\validators.py:18
 msgid "La contraseña debe contener al menos un numero."
-msgstr ""
+msgstr "The password must contain at least one number."
 
 #: .\usuario\validators.py:24
 msgid ""
 "La contraseña debe contener al menos un caracter especial (!@#$%^&*()<>_-)."
-msgstr ""
+msgstr "The password must contain at least one special character (!@#$%^&*()<>_-)."
 
 #: .\usuario\validators.py:28
 msgid ""
 "La contraseña debe contener al menos una mayúscula, un número y un caracter "
 "especial (!@#$%^&*()<>_-)."
-msgstr ""
+msgstr "The password must contain at least one capital letter, one number, and one special character (!@#$%^&*()<>_-)."

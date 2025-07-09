@@ -44,6 +44,8 @@ def lista_productos(request):
         # 'page_obj': paginador
     }
 
+    print('productos', productos)
+
     return render(request, 'productos/lista_productos.html', context)
 
 

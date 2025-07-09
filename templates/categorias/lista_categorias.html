@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 {% block titulo %}
-    Home
+    {% trans "Categorias" %}
 {% endblock %}
 
 {% block css %}
@@ -11,25 +12,25 @@
 {% block contenido %}
 
 <div class="content-section">
-    <h2>Lista de Categorias</h2>
+    <h2>{% trans "Lista de Categorias" %}</h2>
 
     {% if user.is_authenticated %}
         {% if perms.productos.add_categoria %}
-            <a href="{% url 'crear_categoria' %}" class="btn btn-primary">Crear Categoria</a>
-            <a href="{% url 'ajax_categoria' %}" class="btn btn-primary">Crear AJAX Categoria</a>
+            <a href="{% url 'crear_categoria' %}" class="btn btn-primary">{% trans "Crear Categoria" %}</a>
+            <a href="{% url 'ajax_categoria' %}" class="btn btn-primary">{% trans "Crear AJAX Categoria" %}</a>
         {% endif %}
     {% endif %}
     <table>
         <thead>
             <tr>
-                <th>Nombre</th>
-                <th>Descripción</th>
+                <th>{% trans "Nombre" %}</th>
+                <th>{% trans "Descripción" %}</th>
                 {% if user.is_authenticated %}
                     {% if perms.productos.change_categoria %}
-                        <th>Editar</th>
+                        <th>{% trans "Editar" %}</th>
                     {% endif %}
                     {% if perms.productos.delete_categoria %}
-                        <th>Eliminar</th>
+                        <th>{% trans "Eliminar" %}</th>
                     {% endif %}
                 {% endif %}
             </tr>
@@ -41,10 +42,10 @@
                 <td>{{ categoria.descripcion }}</td>
                 {% if user.is_authenticated %}
                     {% if perms.productos.change_categoria %}
-                        <td><a href="{% url 'actualizar_categoria' categoria.id %}" class="btn btn btn-warning">Editar</a></td>
+                        <td><a href="{% url 'actualizar_categoria' categoria.id %}" class="btn btn btn-warning">{% trans "Editar" %}</a></td>
                     {% endif %}
                     {% if perms.productos.delete_categoria %}
-                        <td><a href="{% url 'eliminar_categoria' categoria.id %}" class="btn btn-danger">Eliminar</a></td>
+                        <td><a href="{% url 'eliminar_categoria' categoria.id %}" class="btn btn-danger">{% trans "Eliminar" %}</a></td>
                     {% endif %}
                 {% endif %}
             </tr>
@@ -57,8 +58,5 @@
 
 {% block js %}
 
-<script>
-    console.log("Página de productos cargada");
-</script>
 
 {% endblock %}

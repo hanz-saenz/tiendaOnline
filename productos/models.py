@@ -1,10 +1,18 @@
 from django.db import models
-
+from deep_translator import GoogleTranslator
 # Create your models here.
 # Categorias
 # Proveedor
 # Marca
 # Productos
+
+def traducir_texto(texto, entrada='es', salida='en'):
+    try:
+        traduccion = GoogleTranslator(source=entrada, target=salida).translate(texto)
+        return traduccion
+    except Exception as e:
+        print(f"Error al traducir el texto: {e}")
+        return texto
 
 class Categoria(models.Model):
     nombre = models.CharField(max_length=100)
@@ -18,6 +26,18 @@ class Categoria(models.Model):
     class Meta:
         verbose_name = 'Categoria'
         verbose_name_plural = 'Categorias'
+
+    def save(self, *args, **kwargs):
+        if not self.nombre_en:
+            self.nombre_en = traducir_texto(self.nombre, entrada='es', salida='en')
+        if not self.nombre_fr:
+            self.nombre_fr = traducir_texto(self.nombre, entrada='es', salida='fr')
+        if not self.descripcion_en:
+            self.descripcion_en = traducir_texto(self.descripcion, entrada='es', salida='en')
+        if not self.descripcion_fr:
+            self.descripcion_fr = traducir_texto(self.descripcion, entrada='es', salida='fr')
+        super().save(*args, **kwargs)
+        
 
 class Proveedor(models.Model):
     nombre = models.CharField(max_length=100)
@@ -57,6 +77,18 @@ class Producto(models.Model):
     categorias = models.ManyToManyField(Categoria)
     proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
     marca = models.ForeignKey(Marca, on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        if not self.nombre_en:
+            self.nombre_en = traducir_texto(self.nombre, entrada='es', salida='en')
+        if not self.nombre_fr:
+            self.nombre_fr = traducir_texto(self.nombre, entrada='es', salida='fr')
+        if not self.descripcion_en:
+            self.descripcion_en = traducir_texto(self.descripcion, entrada='es', salida='en')
+        if not self.descripcion_fr:
+            self.descripcion_fr = traducir_texto(self.descripcion, entrada='es', salida='fr')
+        super().save(*args, **kwargs)
+        
 
     def __str__(self):
         return f"{self.nombre} - ${self.precio}"
