@@ -18,7 +18,7 @@
     {% block css %}{% endblock %}
 </head>
 <body>
-    <form action="{% url 'set_language' %}" method="post">
+    <!-- <form action="{% url 'set_language' %}" method="post">
         {% csrf_token %}
         <select name="language" onchange="this.form.submit()">
             {% get_current_language as LANGUAGE_CODE %}
@@ -30,7 +30,7 @@
             {% endfor %}
         </select>
 
-    </form>
+    </form> -->
     <header>
         <div class="container">
             <h1>Bienvenido a Nuestro Sitio</h1>
