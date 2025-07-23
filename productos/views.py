@@ -268,9 +268,13 @@ class EliminarProductoView(DeleteView):
 
 
 from rest_framework.views import APIView
-from .serializers import CategoriaSerializer, ProductoSerializer
+from .serializers import *
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import AllowAny, IsAuthenticated
+
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 
 class CategoriasApiView(APIView):
     def get(self, request, format=None):
@@ -367,3 +371,169 @@ def consultar_tarea(request, tarea_id):
         'resultado': tarea.result if tarea.ready() else None,
     }
     return JsonResponse(context)
+
+
+def lista_productos_index(request):
+    productos = Producto.objects.all()
+    context = {
+        'productos': productos
+    }
+    return render(request, 'productos/index.html', context)
+
+
+#API para los productos
+
+class CategoriaProductoView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        #lista de categirias
+        categotias = Categoria.objects.all()
+        serializer = CategoriaSerializer(categotias, many=True)
+        return Response({
+            'status': 'success',
+            'data': serializer.data,
+            'mensaje': 'Categorias obtenidas correctamente'
+        }, status=status.HTTP_200_OK)
+    
+
+class ProveedorProductoView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        #lista de categirias
+        proveedores = Proveedor.objects.all()
+        serializer = ProveedorSerializer(proveedores, many=True)
+        return Response({
+            'status': 'success',
+            'data': serializer.data,
+            'mensaje': 'Proveedores obtenidos correctamente'
+        }, status=status.HTTP_200_OK)
+    
+class MarcaProductoView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        #lista de categirias
+        marca = Marca.objects.all()
+        serializer = MarcaSerializer(marca, many=True)
+        return Response({
+            'status': 'success',
+            'data': serializer.data,
+            'mensaje': 'Marcas obtenidas correctamente'
+        }, status=status.HTTP_200_OK)
+
+from rest_framework.parsers import MultiPartParser, FormParser
+@method_decorator(csrf_exempt, name='dispatch')
+class ProductosListaView(APIView):
+    permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser]
+
+    def get(self, request, pk=None):
+        #lista de categirias
+        try:
+
+            if pk:
+                producto = Producto.objects.get(pk=pk)
+                serializer = ProductoViewSerializer(producto, data=request.data, partial=True)
+                if serializer.is_valid():
+                    return Response({
+                        'status': 'success',
+                        'data': serializer.data,
+                        'mensaje': 'Productos obtenidas correctamente'
+                    }, status=status.HTTP_200_OK)
+            else:
+                productos = Producto.objects.all()
+                serializer = ProductoViewSerializer(productos, many=True)
+                return Response({
+                    'status': 'success',
+                    'data': serializer.data,
+                    'mensaje': 'Productos obtenidas correctamente'
+                }, status=status.HTTP_200_OK)
+        except Producto.DoesNotExist:
+            return Response({
+                'status': 'error',
+                'data': None,
+                'mensaje': 'Producto no encontrado'
+            }, status=status.HTTP_404_NOT_FOUND)
+            
+
+    def list(self, request):
+        productos = Producto.objects.all()
+        serializer = ProductoViewSerializer(productos, many=True)
+        return Response({
+            'status': 'success',
+            'data': serializer.data,
+            'mensaje': 'Productos obtenidos correctamente'
+        }, status=status.HTTP_200_OK)
+    
+    def post(self, request):
+        try:
+            print('request.data', request.data)
+            serializer = ProductoViewSerializer(data=request.data)
+            if serializer.is_valid():
+                producto = serializer.save()
+                return Response({
+                    'status': 'success',
+                    'data': serializer.data,
+                    'mensaje': 'Producto creado correctamente'
+                }, status=status.HTTP_201_CREATED)
+            return Response({
+                'status': 'error',
+                'data': serializer.errors,
+                'mensaje': 'Error al crear el producto'
+            }, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            print(f"Error al crear el producto: {e}")
+            return Response({
+                'status': 'error',
+                'data': None,
+                'mensaje': f'Error al crear el producto: {str(e)}'
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+
+    def put(self, request, pk):
+        try:
+            print('pk', pk)
+            producto = Producto.objects.get(pk=pk)
+            serializer = ProductoViewSerializer(producto, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response({
+                    'status': 'success',
+                    'data': serializer.data,
+                    'mensaje': 'Producto actualizado correctamente'
+                }, status=status.HTTP_200_OK)
+            return Response({
+                'status': 'error',
+                'data': serializer.errors,
+                'mensaje': 'Error al actualizar el producto'
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+
+        except Exception as e:
+            print(f"Error al actualizar el producto: {e}")
+            return Response({
+                'status': 'error',
+                'data': None,
+                'mensaje': f'Error al actualizar el producto: {str(e)}'
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk):
+        try:
+            producto = Producto.objects.get(pk=pk)
+            producto.delete()
+            return Response({
+                'status': 'success',
+                'data': None,
+                'mensaje': 'Producto eliminado correctamente'
+            }, status=status.HTTP_200_OK)
+        except Exception as e:
+            print(f"Error al eliminar el producto: {e}")
+            return Response({
+                'status': 'error',
+                'data': None,
+                'mensaje': f'Error al eliminar el producto: {str(e)}'
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+

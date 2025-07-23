@@ -13,5 +13,16 @@ urlpatterns = [
 
     #drf
     path('generar-toke/', generar_token, name='generar_token'),
-    path('login/', LoginApiView.as_view(), name='login-drf'),
+    path('login/', LoginApiView2.as_view(), name='login-drf'),
+
+
+
+    ############
+    # urls para el frontend
+
+    path('api/registro/', RegistroUsuarioApiView.as_view(), name='api_registro_usuario'),
+    path('api/login/', LoginAPIView.as_view(), name='api_login_usuario'),
+    path('api/validar-autenticacion/', ValidarAutenticacionAPIView.as_view(), name='api_validar_autenticacion'),
+
+    path('api/perfil/', PerfilUsuarioView.as_view(), name='api_consultaer_perfil'),
 ]

@@ -33,8 +33,15 @@ urlpatterns = [
 
     path('api/categoria/editar_categoria/<int:pk>/', ActualizarCategoriaApiView.as_view(), name='actualizar_categoria_api'),
 
+    path('api/productos/marcas', MarcaProductoView.as_view(), name='marcas-api'),
+    path('api/productos/proveedores', ProveedorProductoView.as_view(), name='proveedor-api'),
+    path('api/productos/categorias', CategoriaProductoView.as_view(), name='categorias-api'),
+    path('api/productos/lista', ProductosListaView.as_view(), name='productos-lista-api'),
+    path('api/productos/lista/<int:pk>/', ProductosListaView.as_view(), name='productos-lista-api-editar'),
+
 
     #generar tarea
     path('generar-tarea/', generar_tare, name='generar_tarea'),
     path('estado-tarea/<str:tarea_id>/', consultar_tarea, name='consultar_tarea'),
+
 ]

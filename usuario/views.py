@@ -265,7 +265,7 @@ def generar_token(request):
     return JsonResponse({'token': token.key})
     
 
-class LoginApiView(APIView):
+class LoginApiView2(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
@@ -301,3 +301,216 @@ class LoginApiView(APIView):
                         'mensaje': f'Error al iniciar sesión. Codigo de error: {e}',
                     }, status=status.HTTP_400_BAD_REQUEST
                 )
+        
+
+#####################################################################
+# Estructura proyecto tienda online
+
+
+## Registro de usuario APIView
+
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework import status
+
+@method_decorator(csrf_exempt, name='dispatch')
+class RegistroUsuarioApiView(APIView):
+    # permission_classes = [AllowAny]
+
+    def post(self, request):
+        #status - success, error
+        #data - datos del usuario - None
+        #mensaje - mensaje de éxito o error
+        #
+        try:
+            print('request.data', request.data)
+            datos = request.data
+            username = datos.get('username')
+            password = datos.get('password')
+            email = datos.get('email')
+
+            registro = User.objects.create_user(
+                username=username,
+                password=password,
+                email=email
+            )
+
+            return Response(
+                {
+                    'status': 'success',
+                    'data': {
+                        'id': registro.id,
+                        'username': registro.username,
+                        'email': registro.email
+                    },
+                    'mensaje': 'Usuario registrado correctamente',
+                }, status=status.HTTP_201_CREATED
+            )
+        except Exception as e:
+            return Response(
+                {
+                    'status': 'error',
+                    'data': None,
+                    'mensaje': f'Error al registrar el usuario. Codigo de error: {e}',
+                }, status=status.HTTP_400_BAD_REQUEST
+            )
+
+
+class LoginAPIView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        try:
+            username = request.data.get('username')
+            password = request.data.get('password')
+
+            user = authenticate(request=request, username=username, password=password)
+
+            #creación del token
+
+            if user:
+
+                refresh = RefreshToken.for_user(user)
+                access_token = str(refresh.access_token)
+
+                # guardar token en las cookies
+
+                response = Response(
+                    {
+                        'status': 'success',
+                        'data': {
+                            'access_token': access_token,
+                            'refresh_token': str(refresh),
+                        },
+                        'mensaje': 'Has iniciado sesión correctamente',
+                    }, status=status.HTTP_200_OK
+                )
+            
+
+                response.set_cookie(
+                    key='access_token',
+                    value=str(refresh.access_token),
+                    httponly=True,
+                    secure=False,  
+                    samesite='Lax',
+                    max_age=3600  
+                )
+                response.set_cookie(
+                    key='refresh_token',
+                    value=str(refresh),
+                    httponly=True,
+                    secure=False,
+                    samesite='Lax',
+                    max_age=86400  
+                )
+
+                return response
+            
+            return Response(
+                {
+                    'status': 'error',
+                    'data': None,
+                    'mensaje': 'Usuario o contraseña incorrectos',
+                }, status=status.HTTP_401_UNAUTHORIZED
+            )
+
+        except Exception as e:
+            return Response(
+                {
+                    'status': 'error',
+                    'data': None,
+                    'mensaje': f'Error al iniciar sesión. Codigo de error: {e}',
+                }, status=status.HTTP_400_BAD_REQUEST
+            )
+        
+#Validador de autenticacion
+
+class ValidarAutenticacionAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+
+    def get(self, request):
+        user = request.user
+        return Response(
+            {
+                'status': 'success',
+                'data': {
+                    'id': user.id,
+                    'username': user.username,
+                    'email': user.email
+                },
+                'mensaje': 'Usuario autenticado correctamente',
+            }, status=status.HTTP_200_OK
+        )
+
+import json
+from .serializers import *
+class PerfilUsuarioView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        try:
+            perfil = PerfilUsuario.objects.get(user=request.user)
+            serializer = PerfilUsuarioSerializer(perfil)
+            print('serializer.data', serializer.data)
+            return Response(
+                {
+                    'status': 'success',
+                    'data': serializer.data,
+                    'mensaje': 'Perfil obtenido correctamente',
+                }, status=status.HTTP_200_OK
+            )
+        except PerfilUsuario.DoesNotExist:
+            return Response(
+                {
+                    'status': 'error',
+                    'data': None,
+                    'mensaje': 'Perfil no encontrado',
+                }, status=status.HTTP_404_NOT_FOUND
+            )
+        
+    def put(self, request):
+        try:
+            perfil = PerfilUsuario.objects.get(user=request.user)
+            serializer = PerfilUsuarioSerializer(perfil, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+
+                updated_perfil = User.objects.get(id=request.user.id)
+                user_request = request.data.get('user', {})
+
+                # Si viene como string, intentar parsearlo
+                if isinstance(user_request, str):
+                    try:
+                        user_request = json.loads(user_request)
+                    except json.JSONDecodeError:
+                        user_request = {}
+
+                updated_perfil.first_name = user_request.get('first_name', updated_perfil.first_name)
+                updated_perfil.last_name = user_request.get('last_name', updated_perfil.last_name)
+                updated_perfil.email = user_request.get('email', updated_perfil.email)
+                updated_perfil.save()
+                print('guardado los datos')
+                print('serializer.data', serializer.data)
+                return Response({
+                    'status': 'success',
+                    'data': serializer.data,
+                    'mensaje': 'Perfil actualizado correctamente',
+                }, status=status.HTTP_200_OK)
+            return Response({
+                'status': 'error',
+                'data': serializer.errors,
+                'mensaje': 'Error al actualizar el perfil',
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        except PerfilUsuario.DoesNotExist:
+            return Response(
+                {
+                    'status': 'error',
+                    'data': None,
+                    'mensaje': 'Perfil no encontrado',
+                }, status=status.HTTP_404_NOT_FOUND
+            )

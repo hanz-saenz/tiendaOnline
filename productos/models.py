@@ -98,7 +98,7 @@ class Producto(models.Model):
         verbose_name_plural = 'Productos'
 
 class Imagen(models.Model):
-    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='imagenes')
     imagen = models.ImageField(upload_to='imagenes/', null=True, blank=True)
     es_principal = models.BooleanField(default=False)
     fecha_creacion = models.DateTimeField(auto_now_add=True)

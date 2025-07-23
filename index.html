@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tienda Virtual</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+  <!-- Encabezado -->
+  <header class="bg-blue-600 text-white p-4">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-2xl font-bold">Mi Tienda Virtual</h1>
+      <nav>
+        <ul class="flex space-x-4">
+          <li><a href="#" class="hover:underline">Inicio</a></li>
+          <li><a href="#" class="hover:underline">Productos</a></li>
+          <li><a href="#" class="hover:underline">Carrito</a></li>
+          <li><a href="#" class="hover:underline">Contacto</a></li>
+        </ul>
+      </nav>
+      <div class="relative">
+        <button class="flex items-center space-x-2 hover:bg-blue-700 p-2 rounded">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+          </svg>
+          <span>Carrito (0)</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Sección de Productos -->
+  <main class="container mx-auto my-8">
+    <h2 class="text-3xl font-semibold text-center mb-6">Nuestros Productos</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <!-- Producto 1 -->
+      <div class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition">
+        <img src="https://via.placeholder.com/150" alt="Producto 1" class="w-full h-48 object-cover rounded-t-lg">
+        <h3 class="text-xl font-medium mt-2">Producto 1</h3>
+        <p class="text-gray-600">$19.99</p>
+        <button class="mt-4 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">Añadir al Carrito</button>
+      </div>
+      <!-- Producto 2 -->
+      <div class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition">
+        <img src="https://via.placeholder.com/150" alt="Producto 2" class="w-full h-48 object-cover rounded-t-lg">
+        <h3 class="text-xl font-medium mt-2">Producto 2</h3>
+        <p class="text-gray-600">$29.99</p>
+        <button class="mt-4 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">Añadir al Carrito</button>
+      </div>
+      <!-- Producto 3 -->
+      <div class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition">
+        <img src="https://via.placeholder.com/150" alt="Producto 3" class="w-full h-48 object-cover rounded-t-lg">
+        <h3 class="text-xl font-medium mt-2">Producto 3</h3>
+        <p class="text-gray-600">$39.99</p>
+        <button class="mt-4 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">Añadir al Carrito</button>
+      </div>
+      <!-- Producto 4 -->
+      <div class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition">
+        <img src="https://via.placeholder.com/150" alt="Producto 4" class="w-full h-48 object-cover rounded-t-lg">
+        <h3 class="text-xl font-medium mt-2">Producto 4</h3>
+        <p class="text-gray-600">$49.99</p>
+        <button class="mt-4 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">Añadir al Carrito</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Pie de Página -->
+  <footer class="bg-gray-800 text-white p-4">
+    <div class="container mx-auto text-center">
+      <p>&copy; 2025 Mi Tienda Virtual. Todos los derechos reservados.</p>
+      <div class="mt-2">
+        <a href="#" class="text-gray-300 hover:text-white mx-2">Términos y Condiciones</a>
+        <a href="#" class="text-gray-300 hover:text-white mx-2">Política de Privacidad</a>
+        <a href="#" class="text-gray-300 hover:text-white mx-2">Contacto</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
