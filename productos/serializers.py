@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Marca, Categoria, Producto, Proveedor, Imagen
+from .models import Marca, Categoria, Producto, Proveedor, Imagen, Carrito, ItemCarrito
 
 
 #serializer para Categorias
@@ -11,7 +11,10 @@ class CategoriaSerializer(serializers.ModelSerializer):
         model = Categoria
         fields = ['id', 'nombre']
 
-
+class ImagenSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Imagen
+        fields = ('id', 'imagen','producto', 'es_principal')
 
 class ProveedorSerializer(serializers.ModelSerializer):
 
@@ -29,6 +32,7 @@ class ProductoSerializer(serializers.ModelSerializer):
     proveedor = ProveedorSerializer()
     categorias = CategoriaSerializer(many=True)
     marca = MarcaSerializer()
+    imagenes = ImagenSerializer(many=True, read_only=True)
 
 
     class Meta:
@@ -84,10 +88,7 @@ class ProductoSerializer(serializers.ModelSerializer):
         return instance
 
 
-class ImagenSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Imagen
-        fields = ('id', 'imagen','producto', 'es_principal')
+
 
 class ProductoViewSerializer(serializers.ModelSerializer):
     categorias = CategoriaSerializer(many=True, read_only=True)
@@ -199,3 +200,27 @@ class ProductoViewSerializer(serializers.ModelSerializer):
             )
 
         return instance
+    
+
+### serializadores de carrito
+
+from usuario.serializers import PerfilUsuarioSerializer
+
+class ItemCarritoSerializer(serializers.ModelSerializer):
+    producto = ProductoSerializer(read_only=True)
+    producto_id = serializers.PrimaryKeyRelatedField(
+        queryset=Producto.objects.all(),
+        source='producto', 
+        write_only=True
+    )
+    class Meta:
+        model = ItemCarrito
+        fields = ['id', 'producto', 'producto_id', 'cantidad']
+
+
+class CarritoSerializer(serializers.ModelSerializer):
+    items = ItemCarritoSerializer(many=True, read_only=True)
+    usuario = PerfilUsuarioSerializer(read_only=True)
+    class Meta:
+        model = Carrito
+        fields = ['id', 'usuario','items', 'fecha_creacion', 'fecha_actualizacion']

@@ -277,6 +277,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 
 class CategoriasApiView(APIView):
+    permission_classes = [AllowAny]
     def get(self, request, format=None):
         categorias = Categoria.objects.all()
         print(type(categorias))
@@ -307,6 +308,31 @@ class CategoriasApiView(APIView):
         categoria = Categoria.objects.get(pk=pk)
         categoria.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+class ProveedorProductoApiView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        #lista de categirias
+        proveedores = Proveedor.objects.all()
+        serializer = ProveedorSerializer(proveedores, many=True)
+        return Response({
+            'status': 'success',
+            'data': serializer.data,
+            'mensaje': 'Proveedores obtenidos correctamente'
+        }, status=status.HTTP_200_OK)
+    
+class MarcaProductoApiView(APIView):
+    permission_classes = [AllowAny]
+    def get(self, request):
+        #lista de categirias
+        marca = Marca.objects.all()
+        serializer = MarcaSerializer(marca, many=True)
+        return Response({
+            'status': 'success',
+            'data': serializer.data,
+            'mensaje': 'Marcas obtenidas correctamente'
+        }, status=status.HTTP_200_OK)
         
 
 from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
@@ -317,10 +343,24 @@ class ActualizarCategoriaApiView(RetrieveUpdateDestroyAPIView):
 
 
 class ProductosApiView(APIView):
-    def get(self, request, format=None):
+    permission_classes = [AllowAny]
+    def get(self, request, format=None,pk=None):
+
+        if pk:
+            producto = Producto.objects.get(pk=pk)
+            serializer = ProductoSerializer(producto)
+            return Response({
+                'status': 'success',
+                'data': serializer.data,
+                'mensaje': 'Producto obtenido correctamente'
+            }, status=status.HTTP_200_OK)
         productos = Producto.objects.all()
         serializer = ProductoSerializer(productos, many=True)
-        return Response(serializer.data)
+        return Response({
+            'status': 'success',
+            'data': serializer.data,
+            'mensaje': 'Productos obtenidos correctamente'
+        }, status=status.HTTP_200_OK)
     
     def post(self, request, format=None):
         serializer = ProductoSerializer(data=request.data)
@@ -537,3 +577,174 @@ class ProductosListaView(APIView):
             }, status=status.HTTP_400_BAD_REQUEST)
         
 
+### vistas para el carrito
+
+class CarritoView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        try:
+            if request.user.is_authenticated:
+                #buscar el carrito del usuario
+                carrito, created = Carrito.objects.get_or_create(usuario=request.user, session_key__isnull=True)
+            
+            else:
+                #cuando no se esta autenticado, usamos el session key
+                session_key = request.session.session_key
+                if not session_key:
+                    request.session.create()
+                    session_key = request.session.session_key
+                carrito, created = Carrito.objects.get_or_create(session_key=session_key, usuario__isnull=True)
+
+            serializer = CarritoSerializer(carrito)
+            return Response({
+                'status': 'success',
+                'data': serializer.data,
+                'mensaje': 'Carrito obtenido correctamente'
+            }, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            print(f"Error al obtener el carrito: {e}")
+            return Response({
+                'status': 'error',
+                'data': None,
+                'mensaje': f'Error al obtener el carrito: {str(e)}'
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+
+    def post(self, request):
+        try:
+            print('request.data', request.data)
+            if request.user.is_authenticated:
+                #buscar el carrito del usuario
+                carrito, created = Carrito.objects.get_or_create(usuario=request.user, session_key__isnull=True)
+            
+            else:
+                #cuando no se esta autenticado, usamos el session key
+                session_key = request.session.session_key
+                if not session_key:
+                    request.session.create()
+                    session_key = request.session.session_key
+                carrito, created = Carrito.objects.get_or_create(session_key=session_key, usuario__isnull=True)
+
+            serializer = CarritoSerializer(carrito)
+
+            producto_id = request.data.get('producto_id')
+            cantidad = request.data.get('cantidad', 1)
+            
+            producto = Producto.objects.get(id=producto_id)
+
+            if producto.stock < cantidad:
+                return Response({
+                    'status': 'error',
+                    'data': None,
+                    'mensaje': 'El producto no tiene suficiente stock'
+                }, status=status.HTTP_400_BAD_REQUEST)
+            
+            item, item_created = ItemCarrito.objects.get_or_create(
+                carrito=carrito, 
+                producto=producto,
+                cantidad=cantidad
+                )
+            
+            if not item_created:
+                item.cantidad += cantidad
+                item.save()
+            
+            serializer = CarritoSerializer(carrito)
+            return Response({
+                'status': 'success',
+                'data': serializer.data,
+                'mensaje': 'Carrito creado correctamente'
+            }, status=status.HTTP_201_CREATED)
+            
+        except Exception as e:
+            print(f"Error al crear el carrito: {e}")
+            return Response({
+                'status': 'error',
+                'data': None,
+                'mensaje': f'Error al crear el carrito: {str(e)}'
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+
+class ItemCarritoView(APIView):
+    permission_classes = [AllowAny]
+
+    def put(self, request, pk):
+        try:
+            print('pk', pk)
+            if request.user.is_authenticated:
+                #buscar el carrito del usuario
+                item = ItemCarrito.objects.get(pk=pk, carrito__usuario=request.user)
+            
+            else:
+                #cuando no se esta autenticado, usamos el session key
+                session_key = request.session.session_key
+                if not session_key:
+                    request.session.create()
+                    session_key = request.session.session_key
+                item = ItemCarrito.objects.get(pk=pk, 
+                                               carrito__session_key=session_key, 
+                                               carrito__usuario__isnull=True   )
+
+            cantidad = request.data.get('cantidad')
+            if cantidad <= 0:
+                item.delete()
+                return Response({
+                    'status': 'success',
+                    'data': None,
+                    'mensaje': 'Item del carrito eliminado correctamente'
+                }, status=status.HTTP_200_OK)
+            
+            if item.producto.stock < cantidad:
+                return Response({
+                    'status': 'error',
+                    'data': None,
+                    'mensaje': 'El producto no tiene suficiente stock'
+                }, status=status.HTTP_400_BAD_REQUEST)
+            
+            item.cantidad = cantidad
+            item.save()
+            serializer = ItemCarritoSerializer(item)
+            return Response({
+                'status': 'success',
+                'data': serializer.data,
+                'mensaje': 'Item del carrito actualizado correctamente'
+            }, status=status.HTTP_200_OK)
+
+        
+
+        except Exception as e:
+            return Response({
+                'status': 'error',
+                'data': None,
+                'mensaje': f'Error al actualizar el item del carrito: {str(e)}'
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+    def delete(self, request, pk):
+        try:
+            if request.user.is_authenticated:
+                #buscar el carrito del usuario
+                item = ItemCarrito.objects.get(pk=pk, carrito__usuario=request.user)
+            
+            else:
+                #cuando no se esta autenticado, usamos el session key
+                session_key = request.session.session_key
+                if not session_key:
+                    request.session.create()
+                    session_key = request.session.session_key
+                item = ItemCarrito.objects.get(pk=pk, 
+                                               carrito__session_key=session_key, 
+                                               carrito__usuario__isnull=True   )
+            item.delete()
+            return Response({
+                'status': 'success',
+                'data': None,
+                'mensaje': 'Item del carrito eliminado correctamente'
+            })
+        except Exception as e:
+            return Response({
+                'status': 'error',
+                'data': None,
+                'mensaje': f'Error al eliminar el item del carrito: {str(e)}'
+            }, status=status.HTTP_400_BAD_REQUEST)

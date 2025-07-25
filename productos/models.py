@@ -110,3 +110,38 @@ class Imagen(models.Model):
     class Meta:
         verbose_name = 'Imagen'
         verbose_name_plural = 'Imagenes'
+
+    
+### modelos para el carrito de compras
+from usuario.models import PerfilUsuario
+
+class Carrito(models.Model):
+    usuario = models.ForeignKey(PerfilUsuario, on_delete=models.CASCADE, related_name='carrito', null=True, blank=True)
+    session_key = models.CharField(max_length=40, null=True, blank=True)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    fecha_actualizacion = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Carrito de {self.usuario}"
+
+    class Meta:
+        verbose_name = 'Carrito'
+        verbose_name_plural = 'Carritos'
+
+class ItemCarrito(models.Model):
+    carrito = models.ForeignKey(Carrito, on_delete=models.CASCADE, related_name='items')
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    cantidad = models.PositiveIntegerField()
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    fecha_actualizacion = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        """
+        Retorna un string que describe el item del carrito en formato:
+        "Nombre del producto - cantidad de unidades"
+        """
+        return f"{self.producto} - {self.cantidad} unidades"
+
+    class Meta:
+        verbose_name = 'Item del Carrito'
+        verbose_name_plural = 'Items del Carrito'

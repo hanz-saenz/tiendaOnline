@@ -28,6 +28,8 @@ urlpatterns = [
     #url drf
     path('api/categorias/', CategoriasApiView.as_view(), name='categorias-api'),
     path('api/productos/', ProductosApiView.as_view(), name='productos-api'),
+    path('api/productos/proveedor/', ProveedorProductoApiView.as_view(), name='proveedor-api-view'),
+    path('api/productos/marca/', MarcaProductoApiView.as_view(), name='marca-api-view'),
     path('api/productos/<int:pk>/', ProductosApiView.as_view(), name='productos-api'),
     path('api/categorias/<int:pk>/', CategoriasApiView.as_view(), name='categorias-api'),
 
@@ -39,6 +41,10 @@ urlpatterns = [
     path('api/productos/lista', ProductosListaView.as_view(), name='productos-lista-api'),
     path('api/productos/lista/<int:pk>/', ProductosListaView.as_view(), name='productos-lista-api-editar'),
 
+    #carrito
+
+    path('api/carrito/', CarritoView.as_view(), name='carrito-api'),
+    path('api/item-carrito/<int:pk>/', ItemCarritoView.as_view(), name='item-carrito-api'),
 
     #generar tarea
     path('generar-tarea/', generar_tare, name='generar_tarea'),
